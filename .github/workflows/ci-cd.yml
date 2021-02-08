@@ -30,7 +30,6 @@ jobs:
         with:
           scope: resourcegroup
           subscriptionId: b20ca6b2-60c6-48a9-8fe1-e3b9e159281a
-          region: Australia East
           resourceGroupName: zippy-dev-rg
           template: Infrastructure/template.json
           deploymentMode: Complete
