@@ -11,7 +11,7 @@ jobs:
   build-and-deploy:
     runs-on: windows-latest
     steps:
-      - name: Git Checkout
+      - name: Checkout
         uses: actions/checkout@v2
 
       - name: Test
@@ -20,9 +20,13 @@ jobs:
       - name: Publish
         run: dotnet publish WeatherApi/WeatherApi.csproj -c Release -o './publish'
         
-      - name: Deploy Azure WebApp
+      - name: Azure Login
+        uses: Azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      
+      - name: Deploy
         uses: Azure/webapps-deploy@v2
         with:
           app-name: fv-weatherapi
-          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: './publish'
