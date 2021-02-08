@@ -24,6 +24,20 @@ jobs:
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          enable-AzPSSession: true
+      
+      - name: Azure PowerShell Action
+        uses: Azure/powershell@v1
+        with:
+          inlineScript: |
+            $rgName = "zippy-weather-dev-rg"
+            $rgExists = az group exists -n $rgName
+            if ($rgExists -eq 'false') {
+                az group create --name $rgName --location "Australia East"
+                Write-Host "az resource group created"
+            }
+          azPSVersion: latest
+          failOnStandardError: true
       
       - name: Deploy Azure Resource Manager (ARM) Template
         uses: Azure/arm-deploy@v1
