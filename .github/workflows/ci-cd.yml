@@ -18,4 +18,4 @@ jobs:
         run: dotnet test
       
       - name: Publish
-        run: dotnet publish WeatherApi/WeatherApi.csproj -c Release -o publish
+        run: dotnet publish WeatherApi/WeatherApi.csproj -c Release -o $GITHUB_WORKSPACE/publish
