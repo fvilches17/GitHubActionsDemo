@@ -32,8 +32,7 @@ jobs:
         with:
           inlineScript: |
             #!/bin/bash
-            rgExists=$(az group exists --name ${{ env.ResourceGroupName }})
-            if $rgExists ; then
+            if $(az group exists --name ${{ env.ResourceGroupName }}) ; then
               echo "az resource group already exists, skipping creation..."
             else
               az group create --name ${{ env.ResourceGroupName }} --location "Australia East"
