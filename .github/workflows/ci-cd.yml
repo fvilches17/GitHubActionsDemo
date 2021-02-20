@@ -31,11 +31,12 @@ jobs:
         uses: Azure/CLI@v1
         with:
           inlineScript: |
-            $rgExists = az group exists -n ${{ env.ResourceGroupName }}
-            if ($rgExists -eq 'false') {
-                az group create --name ${{ env.ResourceGroupName }} --location "Australia East"
-                Write-Host "az resource group created"
-            }
+            #!/bin/bash
+            rgExists=$(az group exists --name ${{ env.ResourceGroupName }})
+            if[ $rgExists -eq false ] 
+            then
+              az group create --name ${{ env.ResourceGroupName }} --location "Australia East"
+              echo "az resource group created"
       
       #- name: Update Resource Group
       #  uses: Azure/arm-deploy@v1
