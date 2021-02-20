@@ -9,15 +9,15 @@ on:
 
 jobs:
   build-and-deploy:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     env:
       ResourceGroupName: zippy-weather-dev-rg
     steps:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Test
-        run: dotnet test
+      #- name: Test
+      # run: dotnet test
       
       - name: Publish
         run: dotnet publish WeatherApi/WeatherApi.csproj -c Release -o './publish'
@@ -37,18 +37,18 @@ jobs:
                 Write-Host "az resource group created"
             }
       
-      - name: Update Resource Group
-        uses: Azure/arm-deploy@v1
-        with:
-          scope: resourcegroup
-          subscriptionId: b20ca6b2-60c6-48a9-8fe1-e3b9e159281a
-          resourceGroupName: ${{ env.ResourceGroupName }}
-          template: Infrastructure/template.json
-          deploymentMode: Complete
-          parameters: hostingPlanName=ZippyWeatherDevAsp name=ZippyWeatherApiDevFv environment=Development
+      #- name: Update Resource Group
+      #  uses: Azure/arm-deploy@v1
+      #  with:
+      #    scope: resourcegroup
+      #    subscriptionId: b20ca6b2-60c6-48a9-8fe1-e3b9e159281a
+      #    resourceGroupName: ${{ env.ResourceGroupName }}
+      #    template: Infrastructure/template.json
+      #    deploymentMode: Complete
+      #    parameters: hostingPlanName=ZippyWeatherDevAsp name=ZippyWeatherApiDevFv environment=Development
       
-      - name: Deploy
-        uses: Azure/webapps-deploy@v2
-        with:
-          app-name: ZippyWeatherApiDevFv
-          package: './publish'
+      #- name: Deploy
+      #  uses: Azure/webapps-deploy@v2
+      #  with:
+      #    app-name: ZippyWeatherApiDevFv
+      #    package: './publish'
