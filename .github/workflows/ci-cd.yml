@@ -16,41 +16,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      #- name: Test
-      # run: dotnet test
-      
-      - name: Publish
-        run: dotnet publish WeatherApi/WeatherApi.csproj -c Release -o './publish'
-        
       - name: Azure Login
         uses: Azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
       
-      - name: Ensure Azure Resource Group Created
-        uses: Azure/CLI@v1
+      - name: Azure CLI script
+        uses: azure/CLI@v1
         with:
+          azcliversion: 2.0.72
           inlineScript: |
-            #!/bin/bash
-            if $(az group exists --name ${{ env.ResourceGroupName }}) ; then
-              echo "az resource group already exists, skipping creation..."
-            else
-              az group create --name ${{ env.ResourceGroupName }} --location "Australia East"
-              echo "az resource group created"
-            fi
-      
-      #- name: Update Resource Group
-      #  uses: Azure/arm-deploy@v1
-      #  with:
-      #    scope: resourcegroup
-      #    subscriptionId: b20ca6b2-60c6-48a9-8fe1-e3b9e159281a
-      #    resourceGroupName: ${{ env.ResourceGroupName }}
-      #    template: Infrastructure/template.json
-      #    deploymentMode: Complete
-      #    parameters: hostingPlanName=ZippyWeatherDevAsp name=ZippyWeatherApiDevFv environment=Development
-      
-      #- name: Deploy
-      #  uses: Azure/webapps-deploy@v2
-      #  with:
-      #    app-name: ZippyWeatherApiDevFv
-      #    package: './publish'
+            az account show
+            az storage -h    
