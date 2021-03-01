@@ -50,7 +50,7 @@ jobs:
           deploymentMode: Complete
           parameters: hostingPlanName=ZippyWeatherDevAsp name=ZippyWeatherApiDevFv environment=Development
       
-      - name: Deploy
+      - name: Deploy Code
         uses: Azure/webapps-deploy@v2
         with:
           app-name: ZippyWeatherApiDevFv
